@@ -34,11 +34,3 @@ services:
     depends_on:
       - db
     restart: always
-
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "8002:80"
-    depends_on:
-      - app
-    restart: always

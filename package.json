@@ -6,7 +6,8 @@
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "test": "vitest"
+    "test": "vitest",
+    "start:prod": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
