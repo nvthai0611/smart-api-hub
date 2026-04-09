@@ -6,8 +6,7 @@
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "test": "vitest",
-    "start:prod": "pm2 start dist/index.js --name smart-api-hub"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
