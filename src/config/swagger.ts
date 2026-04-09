@@ -11,7 +11,7 @@ const swaggerDocument = {
   },
   servers: [
     {
-      url: process.env.SWAGGER_SERVER_URL || 'http://103.245.237.237:3000',
+     url: '/',
     },
   ],
   components: {
