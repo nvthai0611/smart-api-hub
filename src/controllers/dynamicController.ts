@@ -133,7 +133,16 @@ export const update = async (req: Request, res: Response) => {
   
   if (!allowedTables.includes(resource)) return res.status(404).json({ error: 'Resource not found' });
   
-  const updateData = { ...req.body, updated_at: db.fn.now() };
+  // Khác biệt 1: PUT (thay toàn bộ)
+  // Cần mapping chuẩn để đè null/undefined vào những trường không truyền
+  const columns = schema[resource].columns;
+  const updateData: any = { updated_at: db.fn.now() };
+
+  for (const col of Object.keys(columns)) {
+    if (col === 'id' || col === 'created_at' || col === 'updated_at') continue;
+    updateData[col] = req.body[col] !== undefined ? req.body[col] : null; 
+  }
+
   const updated = await db(resource).where({ id }).update(updateData);
   
   if (!updated) return res.status(404).json({ error: 'Record not found' });

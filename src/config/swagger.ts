@@ -89,6 +89,45 @@ const swaggerDocument = {
         responses: { '201': { description: 'Created' } },
       },
     },
+    '/api/{resource}/{id}': {
+      get: {
+        summary: 'Get a specific item by ID',
+        parameters: [
+          { name: 'resource', in: 'path', required: true, schema: { type: 'string' } },
+          { name: 'id', in: 'path', required: true, schema: { type: 'string' } },
+        ],
+        responses: { '200': { description: 'OK' }, '404': { description: 'Not Found' } },
+      },
+      put: {
+        summary: 'Fully update an item by ID',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: 'resource', in: 'path', required: true, schema: { type: 'string' } },
+          { name: 'id', in: 'path', required: true, schema: { type: 'string' } },
+        ],
+        requestBody: { content: { 'application/json': { schema: { type: 'object' } } } },
+        responses: { '200': { description: 'OK' }, '404': { description: 'Not Found' } },
+      },
+      patch: {
+        summary: 'Partially update an item by ID',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: 'resource', in: 'path', required: true, schema: { type: 'string' } },
+          { name: 'id', in: 'path', required: true, schema: { type: 'string' } },
+        ],
+        requestBody: { content: { 'application/json': { schema: { type: 'object' } } } },
+        responses: { '200': { description: 'OK' }, '404': { description: 'Not Found' } },
+      },
+      delete: {
+        summary: 'Delete an item by ID (Admin only)',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: 'resource', in: 'path', required: true, schema: { type: 'string' } },
+          { name: 'id', in: 'path', required: true, schema: { type: 'string' } },
+        ],
+        responses: { '204': { description: 'No Content' }, '403': { description: 'Forbidden' } },
+      },
+    },
   },
 };
 
