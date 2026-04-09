@@ -1,6 +1,7 @@
 import swaggerUi from 'swagger-ui-express';
 import { Express } from 'express';
-
+import dotenv from 'dotenv';
+dotenv.config();
 const swaggerDocument = {
   openapi: '3.0.0',
   info: {
@@ -8,6 +9,11 @@ const swaggerDocument = {
     version: '1.0.0',
     description: 'A dynamic REST API Platform built with Node.js and TypeScript',
   },
+  servers: [
+    {
+      url: process.env.SWAGGER_SERVER_URL || 'http://localhost:3000',
+    },
+  ],
   components: {
     securitySchemes: {
       bearerAuth: {
