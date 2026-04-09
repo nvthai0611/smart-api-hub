@@ -1,0 +1,43 @@
+{
+  "users": {
+    "columns": {
+      "id": "uuid_primary",
+      "email": "string_unique",
+      "password": "string",
+      "role": "string_default_user",
+      "full_name": "string_nullable",
+      "created_at": "timestamp_now",
+      "updated_at": "timestamp_now"
+    }
+  },
+  "categories": {
+    "columns": {
+      "id": "uuid_primary",
+      "name": "string_unique",
+      "description": "text_nullable",
+      "created_at": "timestamp_now",
+      "updated_at": "timestamp_now"
+    }
+  },
+  "products": {
+    "columns": {
+      "id": "uuid_primary",
+      "name": "string",
+      "price": "decimal",
+      "stock": "integer_default_0",
+      "category_id": "uuid_references_categories_id",
+      "created_at": "timestamp_now",
+      "updated_at": "timestamp_now"
+    }
+  },
+  "audit_logs": {
+    "columns": {
+      "id": "uuid_primary",
+      "user_id": "uuid_nullable",
+      "action": "string",
+      "resource_name": "string",
+      "record_id": "string",
+      "timestamp": "timestamp_now"
+    }
+  }
+}

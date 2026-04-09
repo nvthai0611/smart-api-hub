@@ -1,0 +1,97 @@
+import swaggerUi from 'swagger-ui-express';
+import { Express } from 'express';
+
+const swaggerDocument = {
+  openapi: '3.0.0',
+  info: {
+    title: 'Smart API Hub',
+    version: '1.0.0',
+    description: 'A dynamic REST API Platform built with Node.js and TypeScript',
+  },
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
+  paths: {
+    '/health': {
+      get: {
+        summary: 'Check system health',
+        responses: { '200': { description: 'OK' } },
+      },
+    },
+    '/auth/register': {
+      post: {
+        summary: 'Register a new user',
+        requestBody: {
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  email: { type: 'string' },
+                  password: { type: 'string' },
+                  full_name: { type: 'string' },
+                },
+                required: ['email', 'password'],
+              },
+            },
+          },
+        },
+        responses: { '201': { description: 'Created' } },
+      },
+    },
+    '/auth/login': {
+      post: {
+        summary: 'Login and get JWT token',
+        requestBody: {
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  email: { type: 'string' },
+                  password: { type: 'string' },
+                },
+                required: ['email', 'password'],
+              },
+            },
+          },
+        },
+        responses: { '200': { description: 'OK' } },
+      },
+    },
+    '/api/{resource}': {
+      get: {
+        summary: 'Get all items of a resource',
+        parameters: [
+          { name: 'resource', in: 'path', required: true, schema: { type: 'string' } },
+          { name: '_fields', in: 'query', schema: { type: 'string' } },
+          { name: '_page', in: 'query', schema: { type: 'integer' } },
+          { name: '_limit', in: 'query', schema: { type: 'integer' } },
+          { name: '_sort', in: 'query', schema: { type: 'string' } },
+          { name: '_order', in: 'query', schema: { type: 'string' } },
+          { name: '_expand', in: 'query', schema: { type: 'string' } },
+          { name: '_embed', in: 'query', schema: { type: 'string' } },
+          { name: 'q', in: 'query', schema: { type: 'string' } },
+        ],
+        responses: { '200': { description: 'OK' } },
+      },
+      post: {
+        summary: 'Create a new item',
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'resource', in: 'path', required: true, schema: { type: 'string' } }],
+        requestBody: { content: { 'application/json': { schema: { type: 'object' } } } },
+        responses: { '201': { description: 'Created' } },
+      },
+    },
+  },
+};
+
+export const setupSwagger = (app: Express) => {
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+};
