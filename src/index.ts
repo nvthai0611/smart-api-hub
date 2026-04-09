@@ -15,18 +15,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Initialize Swagger before Helmet to avoid CSP blocking its assets
+setupSwagger(app);
+
 app.use(
   helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
-        imgSrc: ["'self'", "data:", "https://validator.swagger.io"],
-        connectSrc: ["'self'", "*"],
-      },
-    },
+    contentSecurityPolicy: false,
   })
 );
 app.use(cors());
@@ -43,7 +37,6 @@ app.get('/health', async (req, res) => {
   }
 });
 
-setupSwagger(app);
 app.use('/auth', authRoutes);
 app.use('/api', dynamicRoutes);
 
