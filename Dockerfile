@@ -28,5 +28,5 @@ RUN npm run build
 EXPOSE 3000
 
 # Launch app with PM2
-CMD [ "pm2-runtime", "start", "npm", "--", "start:prod" ]
+CMD [ "pm2-runtime", "dist/index.js" ]
 
